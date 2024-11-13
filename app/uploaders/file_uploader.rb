@@ -22,7 +22,7 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   def log_process
-    Rails.logger.info "PROCESSING VARIANT"
+    Rails.logger.info "PROCESS HERE <------------"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
