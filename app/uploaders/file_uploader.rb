@@ -1,7 +1,7 @@
 class FileUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -14,16 +14,15 @@ class FileUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb, if: :condition do
-    process :log_variant_creation
+    process :log_process
   end
 
-  def condition(_file)
-    puts "model attributes: #{model.attributes}"
+  def condition(file)
     true
   end
 
-  def log_variant_creation
-    Rails.logger.info "Variants created"
+  def log_process
+    Rails.logger.info "PROCESSING VARIANT"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -57,4 +56,14 @@ class FileUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg"
   # end
+
+  def cache!(file)
+    Rails.logger.info "Calling cache!"
+    super
+  end
+
+  def store!(file = nil)
+    Rails.logger.info "Calling store!"
+    super(file)
+  end
 end
